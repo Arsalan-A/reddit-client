@@ -8,4 +8,4 @@ export default async function fetchSubreddit() {
 }
 
 //Subreddit Posts Api
-`https://www.reddit.com${subreddit}.json`;
+//`https://www.reddit.com${subreddit}.json`;
