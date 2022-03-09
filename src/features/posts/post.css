@@ -63,3 +63,7 @@
 .post-btn-container p {
   margin-left: 35px;
 }
+
+.post-not-found {
+  padding: 0 30px 0 30px;
+}

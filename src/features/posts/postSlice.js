@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchSubredditPosts } from '../../api';
+import { selectSearchTerm } from '../search/searchSlice';
 import moment from 'moment';
 
 export const getPosts = createAsyncThunk(
@@ -49,4 +50,12 @@ export const allPostsSlice = createSlice({
 });
 
 export const selectPosts = (state) => state.allPosts.posts;
+export const selectFilteredPosts = (state) => {
+  const allPosts = selectPosts(state);
+  const searchTerm = selectSearchTerm(state);
+
+  return allPosts.filter((post) =>
+    post.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+};
 export default allPostsSlice.reducer;

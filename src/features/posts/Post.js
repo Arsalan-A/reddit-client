@@ -3,10 +3,22 @@ import './post.css';
 import { RiMessage2Line } from 'react-icons/ri';
 import { useSelector } from 'react-redux';
 
-import { selectPosts } from './postSlice';
+import { selectFilteredPosts } from './postSlice';
 
 const Post = () => {
-  const posts = useSelector(selectPosts);
+  const posts = useSelector(selectFilteredPosts);
+  const { isLoading } = useSelector((state) => state.allPosts);
+
+  //render not Found div
+  const notFound = (
+    <div className='post-container'>
+      <div className='post-data'>
+        <h1 className='post-not-found'>No Posts Found</h1>
+      </div>
+    </div>
+  );
+
+  //render posts div
   const renderPosts = posts.map((post) => {
     return (
       <div key={post.id} className='post-container'>
@@ -30,7 +42,11 @@ const Post = () => {
       </div>
     );
   });
-  return <div className='post-main-container'>{renderPosts}</div>;
+  return (
+    <div className='post-main-container'>
+      {posts.length === 0 && !isLoading ? notFound : renderPosts}
+    </div>
+  );
 };
 
 export default Post;
