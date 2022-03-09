@@ -1,4 +1,6 @@
 .card-container {
   display: flex;
+  justify-content: baseline;
+  align-items: baseline;
   margin: 10px;
 }
