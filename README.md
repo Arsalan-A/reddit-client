@@ -1,3 +1,3 @@
-## Reddit Client
+# Reddit Client
 
-# React/Redux App that fetches reddit API data
+## React/Redux App that fetches reddit API data
