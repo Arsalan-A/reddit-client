@@ -6,32 +6,24 @@ import white from '../../assets/white.PNG';
 
 //Selectors and actions
 import { selectSubreddits, loadSubreddits } from './subredditSlice';
-import { selectPosts, getPosts } from '../posts/postSlice';
-
-import {
-  fetchSubreddits,
-  fetchSubredditPosts,
-  fetchPostComments,
-} from '../../api';
+import { getPosts, setToggle } from '../posts/postSlice';
+import { clearComments } from '../comments/commentSlice';
 
 const Subreddit = () => {
   const allSubreddits = useSelector(selectSubreddits);
   const dispatch = useDispatch();
-  //console.log(allSubreddits);
+
+  //load home subreddit on load
   useEffect(() => {
-    async function fetchData() {
-      const postData = await fetchSubredditPosts('r/home');
-
-      //   const postComments = await fetchPostComments('r/home', 't887rc');
-    }
-
-    fetchData();
     dispatch(loadSubreddits());
     dispatch(getPosts('home'));
   }, [dispatch]);
 
+  //dispatch all actions when clicking the subreddit
   const onClickHandler = (e, subreddit) => {
     dispatch(getPosts(subreddit));
+    dispatch(setToggle(-1));
+    dispatch(clearComments());
   };
 
   //render the titles for subreddits based on the fethced data

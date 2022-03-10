@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchSubredditPosts } from '../../api';
 import { selectSearchTerm } from '../search/searchSlice';
 import moment from 'moment';
+import { allSubredditsSlice } from '../subreddit/subredditSlice';
 
 export const getPosts = createAsyncThunk(
   'allPosts/getAllPosts',
@@ -13,6 +14,7 @@ export const getPosts = createAsyncThunk(
 
 const initialState = {
   posts: [],
+  toggle: false,
   isLoading: false,
   hasError: false,
 };
@@ -20,7 +22,18 @@ const initialState = {
 export const allPostsSlice = createSlice({
   name: 'allPosts',
   initialState,
-  reducers: {},
+  reducers: {
+    setToggle: (state, action) => {
+      if (action.payload === -1) {
+        state.toggle = {};
+      } else {
+        state.toggle = {
+          ...state.toggle,
+          [action.payload]: !state.toggle[action.payload],
+        };
+      }
+    },
+  },
   extraReducers: {
     [getPosts.pending]: (state, action) => {
       state.isLoading = true;
@@ -36,6 +49,7 @@ export const allPostsSlice = createSlice({
           votes: post.ups,
           comments_num: post.num_comments,
           post_time: moment.unix(post.created_utc).fromNow(),
+          subreddit: post.subreddit_name_prefixed,
         };
       });
       state.posts = posts;
@@ -58,4 +72,6 @@ export const selectFilteredPosts = (state) => {
     post.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 };
+export const selectToggle = (state) => state.allPosts.toggle;
+export const { setToggle } = allPostsSlice.actions;
 export default allPostsSlice.reducer;

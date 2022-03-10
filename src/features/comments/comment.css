@@ -1,0 +1,24 @@
+.comment-container {
+  margin-top: 20px;
+  background: #ececec;
+  border-radius: 5px;
+}
+
+.comment-heading {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 15px 0 30px;
+}
+
+.comment-body {
+  padding: 15px;
+}
+
+.comment-poster {
+  color: #3d7df4;
+  font-weight: bold;
+}
+
+.comment-hrs {
+  font-style: italic;
+}
